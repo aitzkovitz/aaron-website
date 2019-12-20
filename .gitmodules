@@ -1,0 +1,4 @@
+[submodule "wp-content/themes/ascii-theme"]
+	path = wp-content/themes/ascii-theme
+	url = https://github.com/aitzkovitz/ascii-theme.git
+	branch = master

@@ -9,7 +9,7 @@ Author URI: http://aaronitzkovitz.com/
 
 // This should be called in wordpress.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-
+error_log("austintest");
 // TBI: add portal to update version
 add_action( 'admin_menu', 'add_version_portal' );
 function add_version_portal(){

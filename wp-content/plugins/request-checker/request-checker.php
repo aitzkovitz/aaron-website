@@ -355,6 +355,8 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
 		}
 		
 		// return 
+		return $itemInfo;
+
     } catch (ApiException $exception) {
 		$err_msg = '';
         $err_msg .= "Error calling PA-API 5.0!" . PHP_EOL;

@@ -321,22 +321,22 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
 
 					// large image
 					if ($item->getImages() != null and
-						$item->getImages()()->getPrimary() != null
-						and $item->getImages()()->getPrimary()->getLarge() != null) {
+						$item->getImages()->getPrimary() != null
+						and $item->getImages()->getPrimary()->getLarge() != null) {
 							$itemInfo['image_large'] = $item->getImages()->getPrimary()->getLarge();
 						}
 
 					// medium image
 					if ($item->getImages() != null and
-						$item->getImages()()->getPrimary() != null
-						and $item->getImages()()->getPrimary()->getMedium() != null) {
+						$item->getImages()->getPrimary() != null
+						and $item->getImages()->getPrimary()->getMedium() != null) {
 							$itemInfo['image_large'] = $item->getImages()->getPrimary()->getMedium();
 						}	
 
 					// small image
 					if ($item->getImages() != null and
-						$item->getImages()()->getPrimary() != null
-						and $item->getImages()()->getPrimary()->getSmall() != null) {
+						$item->getImages()->getPrimary() != null
+						and $item->getImages()->getPrimary()->getSmall() != null) {
 							$itemInfo['image_large'] = $item->getImages()->getPrimary()->getSmall();
 						}
 

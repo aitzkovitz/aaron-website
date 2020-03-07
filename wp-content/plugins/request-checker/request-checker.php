@@ -157,7 +157,7 @@ function check_request(){
 		// $passed = validate( $_POST[ 'licenseId' ], $_POST[ 'domain' ], $_POST[ 'prod_ref' ] );
 		if ( true ){
 
-			$items = getItems($_POST['asin'], $_POST[ 'accessKey' ], $_POST[ 'keyId' ], $_POST[ 'associateTag' ]);
+			$items = getItems($_POST['asin'], $_POST[ 'keyId' ], $_POST[ 'accessKey' ], $_POST[ 'associateTag' ]);
 			$json = json_encode( $items );
 			header( 'Content-type: application/json' );
 			exit( $json );
@@ -241,9 +241,15 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
      * Choose resources you want from GetItemsResource enum
      * For more details, refer: https://webservices.amazon.com/paapi5/documentation/get-items.html#resources-parameter
      */
-    $resources = array(
+    $resources = [
         GetItemsResource::ITEM_INFOTITLE,
-        GetItemsResource::OFFERSLISTINGSPRICE);
+		GetItemsResource::OFFERSLISTINGSPRICE,
+		GetItemsResource::IMAGESPRIMARYSMALL,
+		GetItemsResource::IMAGESPRIMARYMEDIUM,
+		GetItemsResource::IMAGESPRIMARYLARGE,
+		GetItemsResource::OFFERSLISTINGSSAVING_BASIS,
+
+	];
 
     # Forming the request
     $getItemsRequest = new GetItemsRequest();
@@ -375,4 +381,20 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
     } catch (Exception $exception) {
         $err_msg .= "Error Message: " . $exception->getMessage() . PHP_EOL;
     }
+}
+
+/**
+ * Returns the array of items mapped to ASIN
+ *
+ * @param array $items Items value.
+ *
+ * @return array of \Amazon\ProductAdvertisingAPI\v1\com\amazon\paapi5\v1\Item mapped to ASIN.
+ */
+function parseResponse($items)
+{
+    $mappedResponse = array();
+    foreach ($items as $item) {
+        $mappedResponse[$item->getASIN()] = $item;
+    }
+    return $mappedResponse;
 }

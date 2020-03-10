@@ -347,8 +347,8 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
 
 					// features
 					if ($item->getItemInfo() != null and $item->getItemInfo()->getFeatures() != null
-						and $item->getItemInfo()->getFeatures() != null) {
-						$itemInfo['item_description'] = $item->getItemInfo()->getFeatures();
+						and $item->getItemInfo()->getFeatures()->getDisplayValues() != null) {
+						$itemInfo['item_description'] = $item->getItemInfo()->getFeatures()->getDisplayValues();
 					}
 
 

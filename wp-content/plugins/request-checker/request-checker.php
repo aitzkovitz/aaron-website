@@ -154,8 +154,7 @@ function check_request(){
 			error_log( "Couldn't log request." );
 		}
 
-		// $passed = validate( $_POST[ 'licenseId' ], $_POST[ 'domain' ], $_POST[ 'prod_ref' ] );
-		if ( true ){
+		if ( validate( $_POST[ 'licenseId' ], $_POST[ 'domain' ], $_POST[ 'prod_ref' ] ) ){
 
 			$items = getItems($_POST['asin'], $_POST[ 'keyId' ], $_POST[ 'accessKey' ], $_POST[ 'associateTag' ]);
 			if (!empty($items)) {

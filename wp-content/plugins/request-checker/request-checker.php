@@ -267,13 +267,14 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
     # Validating request
     $invalidPropertyList = $getItemsRequest->listInvalidProperties();
     $length = count($invalidPropertyList);
-    if ($length > 0) {
-        echo "Error forming the request", PHP_EOL;
-        foreach ($invalidPropertyList as $invalidProperty) {
-            echo $invalidProperty, PHP_EOL;
-        }
-        return;
-    }
+	
+	// if ($length > 0) {
+    //     echo "Error forming the request", PHP_EOL;
+    //     foreach ($invalidPropertyList as $invalidProperty) {
+    //         echo $invalidProperty, PHP_EOL;
+    //     }
+    //     return;
+    // }
 
     # Sending the request
     try {
@@ -281,7 +282,6 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
 
         # Parsing the response
         if ($getItemsResponse->getItemsResult() != null) {
-            echo 'Printing all item information in ItemsResult:', PHP_EOL;
             if ($getItemsResponse->getItemsResult()->getItems() != null) {
 				$responseList = parseResponse($getItemsResponse->getItemsResult()->getItems());
 				$item = $responseList[$itemId];

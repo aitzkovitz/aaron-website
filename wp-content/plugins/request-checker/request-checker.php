@@ -158,7 +158,7 @@ function check_request(){
 		if ( true ){
 
 			$items = getItems($_POST['asin'], $_POST[ 'keyId' ], $_POST[ 'accessKey' ], $_POST[ 'associateTag' ]);
-			if (empty($items)) {
+			if (!empty($items)) {
 				$json = json_encode( $items );
 				header( 'Content-type: application/json' );
 				exit( $json );

@@ -328,21 +328,21 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
 					if ($item->getImages() != null and
 						$item->getImages()->getPrimary() != null
 						and $item->getImages()->getPrimary()->getLarge() != null) {
-							$itemInfo['image_large'] = $item->getImages()->getPrimary()->getLarge();
+							$itemInfo['image_large'] = $item->getImages()->getPrimary()->getLarge()->getURL();
 						}
 
 					// medium image
 					if ($item->getImages() != null and
 						$item->getImages()->getPrimary() != null
 						and $item->getImages()->getPrimary()->getMedium() != null) {
-							$itemInfo['image_large'] = $item->getImages()->getPrimary()->getMedium();
+							$itemInfo['image_medium'] = $item->getImages()->getPrimary()->getMedium()->getURL();
 						}	
 
 					// small image
 					if ($item->getImages() != null and
 						$item->getImages()->getPrimary() != null
 						and $item->getImages()->getPrimary()->getSmall() != null) {
-							$itemInfo['image_large'] = $item->getImages()->getPrimary()->getSmall();
+							$itemInfo['image_small'] = $item->getImages()->getPrimary()->getSmall()->getURL();
 						}
 
 					// features

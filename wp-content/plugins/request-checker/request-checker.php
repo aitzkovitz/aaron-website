@@ -320,8 +320,8 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
 					if ($item->getOffers() != null and
 						$item->getOffers()->getListings() != null
 						and $item->getOffers()->getListings()[0]->getSavingBasis() != null
-						and $item->getOffers()->getListings()[0]->getSavingBasis()->getSavings()->getDisplayAmount() != null ) {
-							$itemInfo['original_price'] = $item->getOffers()->getListings()[0]->getSavingBasis()->getSavings()->getDisplayAmount();
+						and $item->getOffers()->getListings()[0]->getSavingBasis()->getDisplayAmount() != null ) {
+							$itemInfo['original_price'] = $item->getOffers()->getListings()[0]->getSavingBasis()->getDisplayAmount();
 						}
 
 					// large image

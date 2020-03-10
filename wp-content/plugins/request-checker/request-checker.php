@@ -158,20 +158,26 @@ function check_request(){
 		if ( true ){
 
 			$items = getItems($_POST['asin'], $_POST[ 'keyId' ], $_POST[ 'accessKey' ], $_POST[ 'associateTag' ]);
-			$json = json_encode( $items );
-			header( 'Content-type: application/json' );
-			exit( $json );
+			if (empty($items)) {
+				$json = json_encode( $items );
+				header( 'Content-type: application/json' );
+				exit( $json );
+			}			
+
+			error_log( 'API Error' );
+			header("HTTP/1.0 404 Not Found");
+			exit( json_encode([ 'message' => 'PA API Error' ] ) );
 
 		} else {
 
-			error_log( 'Request rejected' );
-			header("HTTP/1.0 404 Not Found");
+			error_log( 'Request rejected because license does not exist.' );
+			header("HTTP/1.0 403 Permission Denied");
 			exit( json_encode([ 'message' => 'License rejected' ] ) );
 		}
 	} else {
-		error_log('wrong params');
+		error_log('ADG sent the wrong parameters for a request.');
 		header("HTTP/1.0 404 Not Found");
-		exit( json_encode([ 'message' => 'Did not receive correct params' ] ) );
+		exit( json_encode([ 'message' => 'Did not receive correct params.' ] ) );
 	}
 }
 
@@ -242,13 +248,13 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
      * For more details, refer: https://webservices.amazon.com/paapi5/documentation/get-items.html#resources-parameter
      */
     $resources = [
-        GetItemsResource::ITEM_INFOTITLE,
+		GetItemsResource::ITEM_INFOTITLE,
 		GetItemsResource::OFFERSLISTINGSPRICE,
 		GetItemsResource::IMAGESPRIMARYSMALL,
 		GetItemsResource::IMAGESPRIMARYMEDIUM,
 		GetItemsResource::IMAGESPRIMARYLARGE,
 		GetItemsResource::OFFERSLISTINGSSAVING_BASIS,
-
+		GetItemsResource::ITEM_INFOFEATURES
 	];
 
     # Forming the request
@@ -281,7 +287,6 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
 				$item = $responseList[$itemId];
 				
 				if ($item != null) {
-					// make an array of response fields
 
 					// title
 					if ($item->getItemInfo() != null and $item->getItemInfo()->getTitle() != null
@@ -360,7 +365,6 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
 			file_put_contents( $file, $err_str , FILE_APPEND );
 		}
 		
-		// return 
 		return $itemInfo;
 
     } catch (ApiException $exception) {
@@ -377,9 +381,14 @@ function getItems($itemId, $accessKey, $secretKey, $partnerTag)
             }
         } else {
             $err_msg .= "Error response body: " . $exception->getResponseBody() . PHP_EOL;
-        }
+		}
+		
+		return [];
+
     } catch (Exception $exception) {
-        $err_msg .= "Error Message: " . $exception->getMessage() . PHP_EOL;
+		$err_msg .= "Error Message: " . $exception->getMessage() . PHP_EOL;
+		
+		return [];
     }
 }
 
